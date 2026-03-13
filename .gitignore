@@ -1,0 +1,17 @@
+# Dossiers de dépendances
+**/node_modules/
+
+# Dossiers de compilation
+**/target/
+**/dist/
+**/.angular/
+
+# IDE & OS
+.idea/
+.vscode/
+.DS_Store
+*.log
+
+# Données locales Docker (Postgres)
+postgres_data/
+

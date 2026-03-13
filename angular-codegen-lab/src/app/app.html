@@ -1,0 +1,33 @@
+<!-- Navbar avec Menu -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4 shadow">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" routerLink="/">
+      <span class="badge bg-success me-2">A20</span>
+      <strong>angular-codegen-lab</strong>
+    </a>
+
+    <div class="navbar-nav">
+      <!-- On utilise 'text-white' pour le repos et 'bg-white text-primary' pour l'actif -->
+      <a class="nav-link px-3"
+         routerLink="users"
+         routerLinkActive="active bg-white text-primary fw-bold rounded-pill"
+         [routerLinkActiveOptions]="{exact: true}">
+        👤 Users (Petstore)
+      </a>
+
+      <a class="nav-link px-3"
+         routerLink="products"
+         routerLinkActive="active bg-white text-primary fw-bold rounded-pill"
+         [routerLinkActiveOptions]="{exact: true}">
+        📦 Produits (Postgres)
+      </a>
+    </div>
+
+  </div>
+</nav>
+<!-- C'est ici que les composants s'afficheront dynamiquement -->
+<div class="container">
+  <router-outlet></router-outlet>
+</div>
+
+

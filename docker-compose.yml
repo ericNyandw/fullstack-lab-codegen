@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # 🐘 1. La Base de données PostgreSQL
+  db:
+    image: postgres:15-alpine
+    container_name: postgres-db
+    restart: always
+    environment:
+      POSTGRES_DB: product_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # ☕ 2. Le Backend Spring Boot (Java 17)
+  backend:
+    build: ./java-codegen-lab
+    image: my-fullstack-lab/backend:1.0  # 👈 Nom personnalisé
+    container_name: spring-backend
+    depends_on:
+      - db
+    ports:
+      - "8081:8081"
+    environment:
+      # CONFIGURATION CRUCIALE : On remplace 'localhost' par 'db'
+      # ICI ON UTILISE LE PORT INTERNE (5432) ET LE NOM DU SERVICE (db)
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/product_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=admin
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+
+  # 🎨 3. Le Frontend Angular 20 (Nginx)
+  frontend:
+    build: ./angular-codegen-lab
+    image: my-fullstack-lab/frontend:1.0 # 👈 Nom personnalisé
+    container_name: angular-frontend
+    depends_on:
+      - backend
+    ports:
+      - "4242:80"
+
+volumes:
+  postgres_data:
